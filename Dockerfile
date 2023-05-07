@@ -5,9 +5,11 @@ COPY . .
 COPY ./main.go .
 
 RUN go mod tidy
-RUN CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
+RUN go mod download
 
-FROM alpine:latest AS release
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest as release
 RUN apk add --no-cache tzdata
 
 WORKDIR /app
@@ -19,5 +21,5 @@ RUN apk -U upgrade \
     && apk add --no-cache dumb-init ca-certificates \
     && chmod +x /app/app
 
-CMD ["./app", "--prod"]
-ENTRYPOINT ["/usr/bin/dumb-init", "---"]
+CMD ["./app", "-prod"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]

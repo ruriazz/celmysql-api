@@ -1,0 +1,29 @@
+name: 'Production Deployment 🚀🚀'
+
+env:
+  REGISTRY: ghcr.io
+  REPOSITORY: abelz123456/celmysql-api
+  TAG: latest
+  HOOK: https://portainer.celestialsoftwaresolutuions.my.id/api/webhooks/e5ba1c88-ab8e-4220-8116-b0bc915caba8
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  staging_deploy:
+    runs-on: celmysql-api
+    environment:
+      name: "production"
+      url: https://mysql-api.celestialsoftwaresolutuions.my.id
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login -> Docker
+        run: docker login -u ${{secrets.REGISTRY_USER_STAGING_V2}} -p ${{secrets.REGISTRY_PASSWORD_STAGING_V2}} $REGISTRY
+      - name: Docker Containerize -> (BUILD & PUSH)
+        run: |
+          docker build --pull -t "$REGISTRY/$REPOSITORY:$TAG" .
+          docker push "$REGISTRY/$REPOSITORY:$TAG"
+          curl -x POST $HOOK
