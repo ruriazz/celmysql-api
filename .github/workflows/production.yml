@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Login -> Docker
-        run: docker login ghcr.io -u Abelz123456 -p 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
+        run: sudo docker login ghcr.io -u Abelz123456 -p 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
       - name: Docker Containerize -> (BUILD & PUSH)
         run: |
           docker build --pull -t "ghcr.io/$REPOSITORY:$TAG" .
