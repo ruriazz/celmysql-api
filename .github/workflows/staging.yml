@@ -5,9 +5,9 @@ env:
   REGISTRY_USER: ${{secrets.STAGING_REGISTRY_USER}}
   REGISTRY_TOKEN: ${{secrets.STAGING_REGISTRY_PASS}}
   PORTAINER_WEBHOOK: ${{secrets.STAGING_CONTAINER_WEBHOOK}}
-  NAMESPACE:
-  APP_NAME:
-  TAG:
+  NAMESPACE: staging
+  APP_NAME: celmysql-api
+  TAG: latest
 
 on:
   workflow_dispatch:
