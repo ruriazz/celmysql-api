@@ -21,5 +21,6 @@ RUN apk -U upgrade \
     && apk add --no-cache dumb-init ca-certificates \
     && chmod +x /app/app
 
+EXPOSE 3000/tcp
 CMD ["./app", "-prod"]
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
