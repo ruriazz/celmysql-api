@@ -80,10 +80,6 @@ func main() {
 
 	}))
 
-	router.GET("/ping", func(ctx *gin.Context) {
-		ctx.String(200, "pong")
-	})
-
 	router.SetTrustedProxies([]string{"192.168.1.2"})
 
 	v1 := router.Group(docs.SwaggerInfo.BasePath)
