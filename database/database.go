@@ -39,6 +39,7 @@ import (
 
 func GetConnection(config utils.Config) (db *sql.DB) {
 	mysqlDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", config.MysqlDBUser, config.MysqlDBPass, config.MysqlDBHost, config.MysqlDBPort, config.MysqlDBName)
+	mysqlDSNInfo := fmt.Sprintf("mysql(%s:%s/%s)", config.MysqlDBHost, config.MysqlDBPort, config.MysqlDBName)
 	dbDriver := "mysql"
 	// dbUser := "root"
 	// dbPass := "Serverh5n&*#"
@@ -48,13 +49,16 @@ func GetConnection(config utils.Config) (db *sql.DB) {
 	// dbName := "(localhost:3306)/celestialmysqldb"
 	db, err := sql.Open(dbDriver, mysqlDSN)
 	if err != nil {
+		fmt.Println("[ERROR] MySQL Open to", mysqlDSNInfo)
 		panic(err.Error())
 	}
 
 	if err := db.Ping(); err != nil {
+		fmt.Println("[ERROR] MySQL ping to", mysqlDSNInfo)
 		panic(err)
 	}
 
+	fmt.Println("Database Connected to", mysqlDSNInfo)
 	return db
 }
 

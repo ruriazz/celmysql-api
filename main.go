@@ -32,11 +32,15 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalf("sentry.Init: %s", err)
 	// }
-	config, _ := utils.LoadConfig("./")
+	config, err := utils.LoadConfig("./")
+	if err != nil {
+		panic(err)
+	}
+
 	docs.SwaggerInfo.Title = "Celestial - MySQL API"
 	docs.SwaggerInfo.Description = "Celestial - MySQL  API."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:3000"
+	docs.SwaggerInfo.Host = config.AppHost
 	docs.SwaggerInfo.BasePath = ""
 	docs.SwaggerInfo.Schemes = []string{"http"}
 
@@ -60,6 +64,10 @@ func main() {
 
 	authService := services.NewAuthService(permissionPolicyUserRepository, db, validate)
 	authController := controller.NewAuthController(authService)
+
+	if config.AppEnv != "dev" {
+		gin.SetMode("release")
+	}
 
 	router := gin.Default()
 	router.MaxMultipartMemory = 8 << 20 // maximum file 8 MiB

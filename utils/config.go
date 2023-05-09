@@ -15,6 +15,9 @@ type Config struct {
 	Dbuser     string `mapstructure:"DBUSER"`
 	Dbpassword string `mapstructure:"DBPASSWORD"`
 
+	AppEnv  string `mapstructure:"APP_ENV"`
+	AppHost string `mapstructure:"APP_HOST"`
+
 	MysqlDBHost string `mapstructure:"MYSQL_DB_HOST"`
 	MysqlDBPort string `mapstructure:"MYSQL_DB_PORT"`
 	MysqlDBName string `mapstructure:"MYSQL_DB_NAME"`
@@ -27,6 +30,9 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
+
+	viper.SetDefault("APP_ENV", "dev")
+	viper.SetDefault("APP_HOST", "127.0.0.1:3000")
 
 	viper.AutomaticEnv()
 
