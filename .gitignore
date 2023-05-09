@@ -24,3 +24,10 @@ go.work
 public/
 
 .DS_Store
+
+!app.env
+
+.air.toml
+tmp/
+
+log.txt

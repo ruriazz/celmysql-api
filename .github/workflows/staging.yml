@@ -19,8 +19,8 @@ jobs:
   staging_deploy:
     runs-on: self-hosted
     environment:
-      name: "celmysql-api Staging"
-      url: "https://celmysql-api.stg.thisisruri.my.id"
+      name: "Staging"
+      url: "https://mysql-api.stg.celestialsoftwaresolutuions.my.id"
     steps:
       - name: Whoami
         run: whoami

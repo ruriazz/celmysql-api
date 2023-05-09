@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/celmysql-api/utils"
 	_ "github.com/go-sql-driver/mysql"
@@ -37,17 +38,23 @@ import (
 // }
 
 func GetConnection(config utils.Config) (db *sql.DB) {
+	mysqlDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", config.MysqlDBUser, config.MysqlDBPass, config.MysqlDBHost, config.MysqlDBPort, config.MysqlDBName)
 	dbDriver := "mysql"
-	dbUser := "root"
-	dbPass := "Serverh5n&*#"
+	// dbUser := "root"
+	// dbPass := "Serverh5n&*#"
 
 	// dbName := "bk3db"
 	// db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName+"?parseTime=true")
-	dbName := "(localhost:3306)/celestialmysqldb"
-	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp"+dbName+"?parseTime=true")
+	// dbName := "(localhost:3306)/celestialmysqldb"
+	db, err := sql.Open(dbDriver, mysqlDSN)
 	if err != nil {
 		panic(err.Error())
 	}
+
+	if err := db.Ping(); err != nil {
+		panic(err)
+	}
+
 	return db
 }
 

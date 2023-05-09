@@ -25,5 +25,13 @@ public/
 
 .DS_Store
 
-.git/
+!app.env
+
+.air.toml
+tmp/
+
+log.txt
+
 .git*
+.git/
+.github/

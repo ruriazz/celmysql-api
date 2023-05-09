@@ -14,6 +14,12 @@ type Config struct {
 	Database   string `mapstructure:"DATABASE"`
 	Dbuser     string `mapstructure:"DBUSER"`
 	Dbpassword string `mapstructure:"DBPASSWORD"`
+
+	MysqlDBHost string `mapstructure:"MYSQL_DB_HOST"`
+	MysqlDBPort string `mapstructure:"MYSQL_DB_PORT"`
+	MysqlDBName string `mapstructure:"MYSQL_DB_NAME"`
+	MysqlDBUser string `mapstructure:"MYSQL_DB_USER"`
+	MysqlDBPass string `mapstructure:"MYSQL_DB_PASS"`
 }
 
 // LoadConfig reads configuration from file or environment variables.
